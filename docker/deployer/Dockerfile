@@ -6,6 +6,7 @@ RUN set -eux \
       ca-certificates \
       curl \
       gnupg \
+      jq \
       less \
       lsb-release \
       make \
@@ -14,7 +15,7 @@ RUN set -eux \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ARG AWS_CDK_VERSION=2.66.0
+ARG AWS_CDK_VERSION=2.69.0
 RUN npm install -g aws-cdk@${AWS_CDK_VERSION}
 
 COPY requirements.txt /tmp/build/requirements.txt
