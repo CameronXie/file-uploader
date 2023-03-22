@@ -33,4 +33,4 @@ class Pipeline(Stack):
             ),
         )
 
-        pipeline.add_stage(DeploymentStage(self, "deploy", stack_name=repo_name, env=kwargs.get("env")))
+        pipeline.add_stage(DeploymentStage(self, "Deploy", stack_name=repo_name, env=kwargs.get("env")))
