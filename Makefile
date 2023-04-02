@@ -18,11 +18,15 @@ create-dev-env:
 
 # Code
 .PHONY: ci-deploy
-ci-deploy:
-	@docker compose run --rm deployer make deploy
+ci-deploy: create-ci-env
+	@docker-compose run --rm deployer make deploy
 
 .PHONY: deploy
 deploy: build
+	@cdk deploy file-uploader --require-approval never
+
+.PHONY: deploy-pipeline
+deploy-pipeline: build
 	@cdk context --clear
 	@cdk bootstrap aws://${CDK_DEFAULT_ACCOUNT}/${AWS_DEFAULT_REGION}
 	@cdk deploy file-uploader-source-code --require-approval never
@@ -34,12 +38,6 @@ push-code:
 	@git config --global credential.helper "!aws codecommit credential-helper $$@"
 	@git config --global credential.UseHttpPath true
 	@git push https://git-codecommit.${AWS_DEFAULT_REGION}.amazonaws.com/v1/repos/${repo_name} $(shell git branch --show-current):${default_branch}
-
-.PHONY: ci-build
-ci-build: create-ci-env
-	# CodeBuild Docker Compose V2 support
-	# https://github.com/aws/aws-codebuild-docker-images/issues/527
-	@docker-compose run --rm deployer sh -c 'make build && cdk synth'
 
 .PHONY: create-ci-env
 create-ci-env:

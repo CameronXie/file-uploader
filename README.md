@@ -6,7 +6,7 @@ This project demonstrates an approach to leverage S3 multipart upload and Step F
 concurrently download a large file, up to 100TB (10GB * 10,000) in theory, from any given url (request range is
 required), and upload to a S3 bucket.
 
-This project also demonstrates a way to host the source code in CodeCommit and deploy via CDK Pipeline.
+This project (the current branch) also demonstrates a way to host the source code in CodeCommit and deploy via CodePipeline and CodeBuild.
 
 ## Solution
 
